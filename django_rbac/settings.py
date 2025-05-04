@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
     'users',
     'rbac',
+    
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,43 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+# DRF配置详解
+REST_FRAMEWORK = {
+    # 1. 认证配置：指定默认的认证类
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # 使用JWT认证
+    ),
+    
+    # 2. 权限配置：默认所有接口都需要认证
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',  # 要求用户登录
+    ),
+    
+    # 3. API文档配置：使用CoreAPI生成文档
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}
+
+# JWT配置详解
+from datetime import timedelta
+SIMPLE_JWT = {
+    # 1. Token有效期配置
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),    # 访问token有效期：60分钟
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),       # 刷新token有效期：1天
+    
+    # 2. Token刷新配置
+    'ROTATE_REFRESH_TOKENS': False,    # 是否在刷新token时同时生成新的刷新token
+    'BLACKLIST_AFTER_ROTATION': True,  # 是否将旧的刷新token加入黑名单
+    'UPDATE_LAST_LOGIN': True,         # 是否在登录时更新用户的最后登录时间
+    
+    # 3. 加密算法配置
+    'ALGORITHM': 'HS256',              # 使用HS256算法
+    'SIGNING_KEY': SECRET_KEY,         # 使用Django的SECRET_KEY作为签名密钥
+    'VERIFYING_KEY': None,             # 验证密钥（使用对称加密时不需要）
+    
+    # 4. Token相关声明配置
+    'AUTH_HEADER_TYPES': ('Bearer',),  # 认证头类型
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',  # 认证头名称
+    'USER_ID_FIELD': 'id',             # 用户模型中用作ID的字段
+    'USER_ID_CLAIM': 'user_id',        # token中用户ID的声明名称
+}

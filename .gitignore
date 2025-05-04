@@ -26,6 +26,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media/
+*/migrations/*  # 忽略所有应用的migrations文件夹
+!*/migrations/__init__.py  # 保留migrations文件夹下的__init__.py文件
 
 # Virtual Environment
 venv/
