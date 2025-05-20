@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'drf_yasg',
     'users',
     'rbac',
     
@@ -139,12 +138,10 @@ REST_FRAMEWORK = {
     ),
     
     # 2. 权限配置：默认所有接口都需要认证
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',  # 要求用户登录
-    ),
-    
-    # 3. API文档配置：使用CoreAPI生成文档
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rbac.permissions.RBACPermission',
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
 
 # JWT配置详解
@@ -170,3 +167,25 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'id',             # 用户模型中用作ID的字段
     'USER_ID_CLAIM': 'user_id',        # token中用户ID的声明名称
 }
+
+# 缓存配置
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://8.138.103.194:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+# 权限缓存配置
+PERMISSION_CACHE_TIMEOUT = 3600  # 权限缓存过期时间（单位：秒），默认1小时
+
+# 权限白名单配置
+PERMISSION_WHITELIST = [
+    '/api/auth/login/',
+    '/api/auth/register/',
+    '/api/auth/refresh/',
+]
+
