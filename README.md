@@ -1,4 +1,4 @@
-# Django RBAC 权限管理系统
+# Django RBAC 权限管理系统后端
 
 <div align="center">
 
@@ -10,9 +10,9 @@
 
 </div>
 
-这是一个基于Django和Django REST framework实现的RBAC（基于角色的访问控制）权限管理系统。该系统提供了完整的用户认证、权限管理和角色管理功能。
+这是一个基于Django和Django REST framework实现的RBAC（基于角色的访问控制）权限管理系统后端。该系统提供了完整的用户认证、权限管理和角色管理功能，可以作为任何需要权限控制的后端系统的基础框架。
 
-> 📝 本项目有详细的开发教程博客，欢迎阅读：[Django RBAC权限管理系统开发教程](https://blog.csdn.net/weixin_46253270/category_12960723.html?spm=1001.2014.3001.5482)
+> 📝 本项目有详细的开发教程博客，欢迎阅读：[Django RBAC项目后端实战](https://blog.csdn.net/weixin_46253270/category_12960723.html?spm=1001.2014.3001.5482)
 
 ## ✨ 项目亮点
 
